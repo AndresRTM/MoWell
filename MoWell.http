@@ -1,0 +1,6 @@
+@MoWell_HostAddress = http://localhost:5037
+
+GET {{MoWell_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
