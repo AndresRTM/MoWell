@@ -1,4 +1,6 @@
 
+using Scalar.AspNetCore;
+
 namespace MoWell
 {
     public class Program
@@ -19,6 +21,8 @@ namespace MoWell
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+
+                app.MapScalarApiReference();
             }
 
             app.UseHttpsRedirection();
