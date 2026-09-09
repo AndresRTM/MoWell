@@ -1,7 +1,7 @@
 ﻿
 namespace MoWell.Models
 {
-    public class HealtLog
+    public class HealthLog
     {
         public int Id { get; set; }
         public string UserId { get; set; }
