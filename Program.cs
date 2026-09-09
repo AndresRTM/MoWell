@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using MoWell.Data;
+using MoWell.Models;
 using Scalar.AspNetCore;
 
 namespace MoWell
@@ -10,10 +13,21 @@ namespace MoWell
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<MoWellDBContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            builder.Services.AddIdentityApiEndpoints<User>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+            }).AddEntityFrameworkStores<MoWellDBContext>();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            builder.Services.AddAuthorization(); 
 
             var app = builder.Build();
 
@@ -27,8 +41,10 @@ namespace MoWell
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();            
 
+            app.MapIdentityApi<User>();
 
             app.MapControllers();
 
