@@ -10,7 +10,7 @@ namespace MoWell.Models
 
         public LogType Type { get; set; }
 
-        public int value { get; set; }
+        public int Value { get; set; }
 
     }
 }
