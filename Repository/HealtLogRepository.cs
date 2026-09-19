@@ -1,4 +1,5 @@
-﻿using MoWell.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MoWell.Data;
 using MoWell.Interfaces;
 using MoWell.Models;
 
@@ -16,44 +17,42 @@ namespace MoWell.Repository
         public async Task<HealthLog> CreateHealthLog(string userId, DateTime dateTime, LogType type, int value)
         {
             var healthtLog = new HealthLog
-            { 
-                UserId = userId, 
+            {
+                UserId = userId,
                 DateTime = dateTime,
                 Type = type,
                 Value = value
             };
 
-           await _context.HealthLogs.AddAsync(healthtLog);
-           await _context.SaveChangesAsync();
-
+            await _context.HealthLogs.AddAsync(healthtLog);
+            await _context.SaveChangesAsync();
             return healthtLog;
         }
 
         public async Task DeleteHealthLog(int id)
         {
-            var healthLog = _context.HealthLogs.FindAsync(id);
-
+            var healthLog = await _context.HealthLogs.FindAsync(id);
             _context.Remove(healthLog);
-
             await _context.SaveChangesAsync();
-
-
-            throw new NotImplementedException();
         }
 
         public async Task<HealthLog> EditHealthLog(int id, LogType type, int value)
         {
-            throw new NotImplementedException();
+            var healthlog = await _context.HealthLogs.FindAsync(id);
+            healthlog.Type = type;
+            healthlog.Value = value;
+            await _context.SaveChangesAsync();
+            return healthlog;
         }
 
         public async Task<List<HealthLog>> GetAllHealthLogs(string userId)
         {
-            throw new NotImplementedException();
+            return await _context.HealthLogs.Where(x => x.UserId == userId).ToListAsync();
         }
 
         public async Task<HealthLog> GetHealthLogById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.HealthLogs.FindAsync(id);
         }
     }
 }
