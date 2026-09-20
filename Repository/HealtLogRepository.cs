@@ -36,9 +36,10 @@ namespace MoWell.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<HealthLog> EditHealthLog(int id, LogType type, int value)
+        public async Task<HealthLog> EditHealthLog(int id, DateTime dateTime, LogType type, int value)
         {
             var healthlog = await _context.HealthLogs.FindAsync(id);
+            healthlog.DateTime = dateTime;
             healthlog.Type = type;
             healthlog.Value = value;
             await _context.SaveChangesAsync();
