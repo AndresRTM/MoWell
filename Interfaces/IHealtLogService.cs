@@ -8,7 +8,7 @@ namespace MoWell.Interfaces
         Task<HealthLogDto> CreateHealthLog(string userId, HealthLogRequestDto dto);
         Task<List<HealthLogDto>> GetAllHealthLogs(string userId);
         Task<HealthLogDto> GetHealthLogById(string userId, int id) ;
-        Task<HealthLog> EditHealthLog(string userId, int id, HealthLogRequestDto dto);
+        Task<HealthLogDto> EditHealthLog(string userId, int id, HealthLogRequestDto dto);
         Task DeleteHealthLog(string userID, int id);
     }
 }
