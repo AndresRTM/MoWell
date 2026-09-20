@@ -2,7 +2,7 @@
 
 namespace MoWell.DTO
 {
-    public class CreateHealthLogDto
+    public class HealthLogRequestDto
     {
         public DateTime DateTime { get; set; }
         public LogType Type { get; set; }
