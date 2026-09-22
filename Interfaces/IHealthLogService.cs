@@ -3,7 +3,7 @@ using MoWell.Models;
 
 namespace MoWell.Interfaces
 {
-    public interface IHealtLogService
+    public interface IHealthLogService
     {
         Task<HealthLogDto> CreateHealthLog(string userId, HealthLogRequestDto dto);
         Task<List<HealthLogDto>> GetAllHealthLogs(string userId);

@@ -2,7 +2,7 @@
 
 namespace MoWell.Interfaces
 {
-    public interface IHealtLogRepository
+    public interface IHealthLogRepository
     {
         Task<List<HealthLog>> GetAllHealthLogs(string userId);
         Task<HealthLog> GetHealthLogById(int id);
