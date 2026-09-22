@@ -41,6 +41,20 @@ namespace MoWell.Controllers
             return Ok(log);
         }
 
+        [HttpPut("{logId:int}")]
+        public async Task<IActionResult> Edit(int logId, HealthLogRequestDto editHealthLog)
+        {
+            await _healthLogService.EditHealthLog(GetUserId(), logId, editHealthLog);
+            return NoContent();
+        }
+
+        [HttpDelete("{logId:int}")]
+        public async Task<IActionResult> Delete(int logId)
+        {
+            await _healthLogService.DeleteHealthLog(GetUserId(), logId);
+            return NoContent();
+        }
+
         private string GetUserId()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier)!;
