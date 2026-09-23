@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoWell.Data;
 
@@ -11,9 +12,11 @@ using MoWell.Data;
 namespace MoWell.Migrations
 {
     [DbContext(typeof(MoWellDBContext))]
-    partial class MoWellDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260923084509_MakeNamesNullable")]
+    partial class MakeNamesNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
