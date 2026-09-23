@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MoWell.Data;
 using MoWell.Interfaces;
+using MoWell.Middleware;
 using MoWell.Models;
 using MoWell.Repository;
 using MoWell.Service;
@@ -36,19 +37,21 @@ namespace MoWell
 
             var app = builder.Build();
 
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
-
                 app.MapScalarApiReference();
             }
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            app.UseAuthorization();            
+            app.UseAuthorization();
 
+            var api = app.MapGroup("/api");
             app.MapIdentityApi<User>();
 
             app.MapControllers();
