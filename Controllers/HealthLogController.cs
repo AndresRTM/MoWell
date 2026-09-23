@@ -34,21 +34,21 @@ namespace MoWell.Controllers
             return Ok(healthLogs);
         }
 
-        [HttpGet("{logId:int}")]
+        [HttpGet("{logId:int:min(1)}")]
         public async Task<ActionResult<HealthLogDto>> GetById(int logId)
         {
             var log = await _healthLogService.GetHealthLogById(GetUserId(), logId);
             return Ok(log);
         }
 
-        [HttpPut("{logId:int}")]
+        [HttpPut("{logId:int:min(1)}")]
         public async Task<IActionResult> Edit(int logId, HealthLogRequestDto editHealthLog)
         {
             await _healthLogService.EditHealthLog(GetUserId(), logId, editHealthLog);
             return NoContent();
         }
 
-        [HttpDelete("{logId:int}")]
+        [HttpDelete("{logId:int:min(1)}")]
         public async Task<IActionResult> Delete(int logId)
         {
             await _healthLogService.DeleteHealthLog(GetUserId(), logId);

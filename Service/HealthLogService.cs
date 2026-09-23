@@ -1,4 +1,5 @@
 ﻿using MoWell.DTO;
+using MoWell.Exceptions;
 using MoWell.Interfaces;
 using MoWell.Models;
 
@@ -54,12 +55,12 @@ namespace MoWell.Service
 
             if (healthLog == null)
             {
-                throw new Exception("Loggen hittades inte");
+                throw new NotFoundException("Loggen hittades inte");
             }
 
             if (healthLog.UserId != userId)
             {
-                throw new UnauthorizedAccessException("Du har inte behörighet");
+                throw new NotFoundException("Loggen hittades inte");
             }
 
             return healthLog;
