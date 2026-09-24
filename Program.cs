@@ -6,6 +6,7 @@ using MoWell.Models;
 using MoWell.Repository;
 using MoWell.Service;
 using Scalar.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MoWell
 {
@@ -52,6 +53,14 @@ namespace MoWell
             app.UseAuthorization();
 
             var api = app.MapGroup("/api");
+
+
+            app.MapPost("/logout", async (SignInManager<User> signInManager) =>
+            {
+                await signInManager.SignOutAsync();
+                return Results.Ok();
+            }).RequireAuthorization();
+
             app.MapIdentityApi<User>();
 
             app.MapControllers();

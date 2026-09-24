@@ -26,11 +26,13 @@ namespace MoWell.Middleware
 
                 var problemDetails = new ProblemDetails
                 {
-                    Status = StatusCodes.Status404NotFound,
                     Title = "Not found",
+                    Status = StatusCodes.Status404NotFound,
                     Detail = ex.Message
                 };
+                await context.Response.WriteAsJsonAsync(problemDetails);
             }
+
 
             catch(ArgumentException ex) 
             {
@@ -38,10 +40,12 @@ namespace MoWell.Middleware
 
                 var problemDetails = new ProblemDetails
                 {
+                    Title = "Bad Request",
                     Status = StatusCodes.Status400BadRequest,
-                    Title = "Vad Request",
                     Detail = ex.Message
                 };
+
+                await context.Response.WriteAsJsonAsync(problemDetails);
             }
 
             catch (Exception)
@@ -49,9 +53,9 @@ namespace MoWell.Middleware
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 var problemDetails = new ProblemDetails
                 {
-                    Status = StatusCodes.Status500InternalServerError,
                     Title = "Internal Server Error",
-                    Detail = "Ett oväntat fel har inträffat"
+                    Status = StatusCodes.Status500InternalServerError,
+                    Detail = "An unexpected error occurred"
                 };
 
                 await context.Response.WriteAsJsonAsync(problemDetails);
