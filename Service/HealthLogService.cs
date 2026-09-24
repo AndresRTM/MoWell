@@ -55,12 +55,12 @@ namespace MoWell.Service
 
             if (healthLog == null)
             {
-                throw new NotFoundException("Loggen hittades inte");
+                throw new NotFoundException("Health log not found");
             }
 
             if (healthLog.UserId != userId)
             {
-                throw new NotFoundException("Loggen hittades inte");
+                throw new NotFoundException("Health log not found");
             }
 
             return healthLog;
@@ -86,7 +86,7 @@ namespace MoWell.Service
         {
             if (utcDateTime > DateTime.UtcNow.AddMinutes(1))
             {
-                throw new ArgumentException("Du kan inte logga i framtiden");
+                throw new ArgumentException("You cannot log in the future");
             }
         }
 

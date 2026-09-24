@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using MoWell.Data;
 using MoWell.Interfaces;
+using MoWell.Middleware;
 using MoWell.Models;
 using MoWell.Repository;
 using MoWell.Service;
 using Scalar.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MoWell
 {
@@ -36,18 +38,28 @@ namespace MoWell
 
             var app = builder.Build();
 
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
-
                 app.MapScalarApiReference();
             }
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            app.UseAuthorization();            
+            app.UseAuthorization();
+
+            var api = app.MapGroup("/api");
+
+
+            app.MapPost("/logout", async (SignInManager<User> signInManager) =>
+            {
+                await signInManager.SignOutAsync();
+                return Results.Ok();
+            }).RequireAuthorization();
 
             app.MapIdentityApi<User>();
 
