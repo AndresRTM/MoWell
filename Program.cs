@@ -27,6 +27,7 @@ namespace MoWell
 
             builder.Services.AddIdentityApiEndpoints<User>(options =>
             {
+                options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedAccount = false;
             }).AddEntityFrameworkStores<MoWellDBContext>();
 
@@ -34,11 +35,21 @@ namespace MoWell
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-            builder.Services.AddAuthorization();            
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Frontend", policy =>
+                {
+                    policy.WithOrigins(builder.Configuration["frontend_Domain"]).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                });
+
+            });
 
             var app = builder.Build();
 
             app.UseMiddleware<GlobalExceptionMiddleware>();
+            app.UseCors("Frontend");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -48,7 +59,6 @@ namespace MoWell
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
