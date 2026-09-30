@@ -41,7 +41,7 @@ namespace MoWell
             {
                 options.AddPolicy("Frontend", policy =>
                 {
-                    policy.WithOrigins(builder.Configuration["frontend_Domain"]).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                    policy.WithOrigins(builder.Configuration["Frontend_Domain"]).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                 });
 
             });
@@ -65,13 +65,13 @@ namespace MoWell
             var api = app.MapGroup("/api");
 
 
-            app.MapPost("/logout", async (SignInManager<User> signInManager) =>
+            api.MapPost("/logout", async (SignInManager<User> signInManager) =>
             {
                 await signInManager.SignOutAsync();
                 return Results.Ok();
             }).RequireAuthorization();
 
-            app.MapIdentityApi<User>();
+            api.MapIdentityApi<User>();
 
             app.MapControllers();
 
